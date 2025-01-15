@@ -8,6 +8,7 @@ from src.exception import CustomException
 from src.logger import logging
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
+from src.components.data_transformation import DataTransformation
 
 # In the DataIngestionConfig class, we typically pass the input as arguments or parameters to the class, rather than storing the inputs directly.
 @dataclass              # Alternative of an constructor.Shorthand for initialization of an instance variable.
@@ -52,3 +53,8 @@ if __name__=='__main__':
     obj = DataIngestion()
     train_data , test_data = obj.initiate_data_ingestion()
 
+    data_transformation = DataTransformation()
+    train_arr , test_arr,_ = data_transformation.initiate_data_transformation(train_data , test_data)
+
+    # model_training = ModelTransformation()
+    # print(model_training.initiate_model_trainer(train_arr,test_arr))
