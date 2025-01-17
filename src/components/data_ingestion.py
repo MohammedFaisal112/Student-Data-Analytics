@@ -9,6 +9,7 @@ from src.logger import logging
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 from src.components.data_transformation import DataTransformation
+from src.components.model_training import ModelTrainer
 
 # In the DataIngestionConfig class, we typically pass the input as arguments or parameters to the class, rather than storing the inputs directly.
 @dataclass              # Alternative of an constructor.Shorthand for initialization of an instance variable.
@@ -56,5 +57,7 @@ if __name__=='__main__':
     data_transformation = DataTransformation()
     train_arr , test_arr,_ = data_transformation.initiate_data_transformation(train_data , test_data)
 
-    # model_training = ModelTransformation()
-    # print(model_training.initiate_model_trainer(train_arr,test_arr))
+    model_training = ModelTrainer()
+    best_model,best_model_score=model_training.initiate_model_trainer(train_arr,test_arr)
+
+    print(f"The Model which performed well is:{best_model} and the Performance/r2_score of the model is:{best_model_score}")
