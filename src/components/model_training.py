@@ -10,7 +10,6 @@ import sys
 from sklearn.linear_model import LinearRegression , Ridge , Lasso
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor , AdaBoostRegressor , GradientBoostingRegressor 
-from sklearn.neighbors import KNeighborsRegressor
 from xgboost import XGBRegressor
 from src.util import save_object,evaluate_model
 
@@ -27,9 +26,34 @@ class ModelTrainer:
             logging.info("Splitting an training and testing array")
             X_train , Y_train , X_test , Y_test = (train_arr[:,:-1] , train_arr[:,-1] , test_arr[:,:-1] , test_arr[:,-1])
 
-            models = {"Linear Regression":LinearRegression() ,"Ridge" : Ridge() ,"Lasso": Lasso(),"Decision Tree":DecisionTreeRegressor(),"Random Forest":RandomForestRegressor(),"K-Neighbour Regressor":KNeighborsRegressor() , "Adaptive Boost Regressor":AdaBoostRegressor(),"Gradient Boosting Regressor":GradientBoostingRegressor(),"Xtreme Gradient Boosting Regressor":XGBRegressor()}
+            models = {"Linear Regression":LinearRegression(),"Ridge" : Ridge() ,"Lasso": Lasso(),"Decision Tree":DecisionTreeRegressor(),"Random Forest":RandomForestRegressor(), "Adaptive Boost Regressor":AdaBoostRegressor(),"Gradient Boosting Regressor":GradientBoostingRegressor(),"Xtreme Gradient Boosting Regressor":XGBRegressor()}
 
-            model_report: dict=evaluate_model(X_train=X_train,Y_train=Y_train,X_test=X_test,Y_test=Y_test,models=models)
+            params = {
+                "Decision Tree" : {
+                    "criterion":["squared_error" , "friedman_mse" , "absolute_error" , "poisson"]
+                    },
+                "Random Forest" : {
+                    "n_estimators" : [8,16,32,64,128,256]
+                },
+                "Gradient Boosting Regressor" : {
+                    "learning_rate":[.1,.05,.001,.01],
+                    "subsample":[0.6,0.7,0.8,0.9],
+                    "n_estimators" : [8,16,32,64,128,256]
+                },
+                "Xtreme Gradient Boosting Regressor" : {
+                    "learning_rate":[.1,.01,.001,.05],
+                    "n_estimators":[8,16,32,64,128,256]
+                },
+                "Adaptive Boost Regressor" : {
+                    "learning_rate":[.1,.001,.01,.05],
+                    "n_estimators":[8,16,32,64,128,256]
+                },
+                "Linear Regression" : {},
+                "Ridge" : {},
+                "Lasso" : {}
+            }
+
+            model_report: dict=evaluate_model(X_train=X_train,Y_train=Y_train,X_test=X_test,Y_test=Y_test,models=models,param = params)
 
             best_score = max(sorted(model_report.values()))
             logging.info(f"The best R2_Score with respect to an model is: {best_score}")
