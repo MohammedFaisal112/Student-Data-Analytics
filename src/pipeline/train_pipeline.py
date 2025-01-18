@@ -1,1 +1,0 @@
-# Triggered the training process.

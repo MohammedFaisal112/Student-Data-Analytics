@@ -8,6 +8,7 @@ from src.logger import logging
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 
+# To save a file in an binary format to an specific location.
 def save_object(file_path , obj):
     try:
         dir_path = os.path.dirname(file_path)
@@ -17,8 +18,19 @@ def save_object(file_path , obj):
             pickle.dump(obj , file_obj)
 
     except Exception as e:
-        logging.info(f"Error while saving an processor.pkl file , The error is {e}")
+        logging.info(f"Error while saving an file , The error is {e}")
         raise CustomException(e,sys)
+
+
+# To load a specific file/ read a binary file from a specific location.
+def load_object(file_path):
+    try:
+        with open(file_path, 'rb') as file_obj:
+            return pickle.load(file_obj)
+    except Exception as e:
+        logging.info(f"Error in loading a file, The Error is {e}")
+        raise CustomException(e,sys)
+
 
 
 # Training and Evaluating the result of the models.
