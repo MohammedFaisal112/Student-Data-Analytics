@@ -26,4 +26,5 @@ Interface: <br>
 
 Sample Output.
 ![Sample Output](https://github.com/MohammedFaisal112/Student-Data-Analytics/blob/main/output/Output1.png)
+Sample Output.
 ![Sample Output](https://github.com/MohammedFaisal112/Student-Data-Analytics/blob/main/output/Output2.png)
