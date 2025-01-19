@@ -170,6 +170,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Custom ignore
+# Custom ignores
 notebook/
 src/pipeline/train_pipeline.py
+.ebextensions/
